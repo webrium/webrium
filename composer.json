@@ -1,0 +1,24 @@
+{
+  "name": "webrium/webrium",
+  "description": "MVC Micro Framework",
+  "type": "library",
+  "require": {
+    "php": ">=7.0.0",
+    "botfire/botfire": "0.0.*",
+    "webrium/mysql": "0.1.*",
+    "webrium/core": "0.0.*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "benjamin-khalife",
+      "email": "nvioir@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "webrium\\webrium\\": "src/"
+    }
+  }
+}
