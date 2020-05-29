@@ -1,7 +1,7 @@
 {
   "name": "webrium/webrium",
   "description": "MVC Micro Framework",
-  "type": "library",
+  "type": "project",
   "require": {
     "php": ">=7.0.0",
     "botfire/botfire": "0.0.*",
@@ -16,9 +16,4 @@
     }
   ],
   "minimum-stability": "dev",
-  "autoload": {
-    "psr-4": {
-      "webrium\\webrium\\": "src/"
-    }
-  }
 }
