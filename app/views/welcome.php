@@ -21,7 +21,7 @@
         <strong>Hello World</strong>
       </div>
       <div class="">
-        <strong> @echo $name @end </strong>
+        <strong> {{ $name }} </strong>
       </div>
     </div>
 

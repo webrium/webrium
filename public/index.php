@@ -6,8 +6,6 @@ use webrium\core\App;
 use webrium\core\Debug;
 use webrium\core\File;
 use webrium\core\Directory;
-use webrium\core\Route;
-use webrium\core\Url;
 
 // init index path
 App::root(__DIR__.'/..');
