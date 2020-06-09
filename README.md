@@ -11,4 +11,5 @@ composer create-project webrium/webrium
 
 ### learn
  
- * [routing engine](https://github.com/webrium/webrium/wiki/routing-engine)
+ * [Routing](https://github.com/webrium/webrium/wiki/routing-engine)
+ * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
