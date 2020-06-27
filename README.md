@@ -9,7 +9,7 @@ composer create-project webrium/webrium
 ```
 
 
-### learn
+### Documentation
  
  * [Routing](https://github.com/webrium/webrium/wiki/routing)
  * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
