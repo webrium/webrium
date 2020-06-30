@@ -6,7 +6,8 @@
     "php": ">=7.0.0",
     "botfire/botfire": "0.0.*",
     "webrium/mysql": "0.1.*",
-    "webrium/core": "0.0.*"
+    "webrium/core": "0.0.*",
+    "phpmailer/phpmailer": "~6.1"
   },
   "license": "MIT",
   "authors": [
