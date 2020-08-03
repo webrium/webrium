@@ -18,9 +18,9 @@
   ],
   "minimum-stability": "dev",
   "scripts": {
-		"post-autoload-dump": [
-      "php -r \"chmod( __DIR__ . '/app/storage/framework/views', 0777);\"",
-			"php -r \"chmod( __DIR__ . '/app/storage/logs', 0777);\""
-		]
-	}
+	"post-create-project-cmd": [
+      		"php -r \"chmod( __DIR__ . '/app/storage/framework/views', 0777);\"",
+		"php -r \"chmod( __DIR__ . '/app/storage/logs', 0777);\""
+	]
+   }
 }
