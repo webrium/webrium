@@ -16,4 +16,5 @@ composer create-project webrium/webrium
  * [URL Generation](https://github.com/webrium/webrium/wiki/URL-Generation)
  * [Blade Templates](https://github.com/webrium/webrium/wiki/Blade-Templates)
  * [View](https://github.com/webrium/webrium/wiki/View)
+ * [Upload](https://github.com/webrium/webrium/wiki/Upload)
  
