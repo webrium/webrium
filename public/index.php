@@ -17,7 +17,7 @@ Debug::displayErrors(true);
 Directory::initDefaultStructure();
 
 // load config
-File::source('config',['db.php']);
+File::source('config',['config.php','db.php']);
 
 // load routes
 File::source('routes',['web.php']);
