@@ -18,10 +18,16 @@
   ],
   "minimum-stability": "dev",
   "scripts": {
+<<<<<<< HEAD
   	"post-create-project-cmd": [
       "php -r \"chmod( __DIR__ . '/app/storage/framework/views', 0777);\"",
       "php -r \"chmod( __DIR__ . '/app/storage/framework/sessions', 0777);\"",
   		"php -r \"chmod( __DIR__ . '/app/storage/logs', 0777);\""
   	]
+=======
+	"post-create-project-cmd": [
+    "php -r \"chmod( __DIR__ . '/app/storage', 0777);\""
+	]
+>>>>>>> a633bde1841f5fe55f0933b8451c214890972923
    }
 }
