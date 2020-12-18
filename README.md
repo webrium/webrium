@@ -2,9 +2,9 @@
 
 Webrium is a web application framework. We believe that development should be quick, simple and light
 
-✔ small size : just 500 kb <br>
 ✔ Fast <br>
 ✔ MVC <br>
+✔ Lightweight <br>
 ✔ Supprot Composer <br>
 
 
