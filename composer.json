@@ -6,7 +6,7 @@
     "php": ">=7.0.0",
     "botfire/botfire": "*@stable",
     "webrium/foxql": "@dev",
-    "webrium/core": "@dev",
+    "webrium/core": "*@stable",
     "phpmailer/phpmailer": "~6.1"
   },
   "license": "MIT",
