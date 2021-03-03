@@ -1,4 +1,5 @@
 ## About Webrium
+[![Latest Stable Version](https://poser.pugx.org/webrium/webrium/v)](//packagist.org/packages/webrium/webrium) [![Total Downloads](https://poser.pugx.org/webrium/webrium/downloads)](//packagist.org/packages/webrium/webrium)  [![License](https://poser.pugx.org/webrium/webrium/license)](//packagist.org/packages/webrium/webrium)
 
 Webrium is a web application framework. We believe that development should be quick, simple and light
 
