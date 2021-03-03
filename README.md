@@ -6,8 +6,6 @@ Webrium is a web application framework. We believe that development should be qu
 ✔ Fast <br>
 ✔ MVC <br>
 ✔ Lightweight <br>
-✔ Supprot Composer <br>
-
 
 
 ### install
