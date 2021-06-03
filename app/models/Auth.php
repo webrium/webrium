@@ -1,5 +1,5 @@
 <?php
-namespace app\models\Auth;
+namespace app\models;
 
 use webrium\foxql\DB;
 
