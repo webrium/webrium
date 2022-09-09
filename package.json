@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.2",
+    "autoprefixer": "^10.4.2",
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^3.0.23"
+  },
+  "scripts": {
+    "build:css": "postcss ./tailwindcss/input.css -o ./public/css/style.css --watch --minify",
+    "serve":"npm run build:css & php -S localhost:8000 -t public/"
+  }
+}

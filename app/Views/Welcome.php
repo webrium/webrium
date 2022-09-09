@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Webrium</title>
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="bg-gradient-to-br from-pink-700 to-sky-800 px-4 pt-32 pb-16">
 
-    <style media="screen">
-    .center{
-      text-align:center;
-      padding: 30px;
-    }
-    .center>div{
-      margin-top:15px;
-    }
-    </style>
-
-  </head>
-  <body>
-    <div class="center">
-      <div class="">
-        <strong>Hello World</strong>
-      </div>
-      <div class="">
-        <strong> {{ $name }} </strong>
-      </div>
+    <div class="w-full flex justify-center">
+      <h1 class="text-3xl font-bold text-white/60">Webrium Framework</h1>
     </div>
 
-  </body>
+    <div class="mt-10 mx-auto flex justify-center">
+      <a target="_blank" href="https://github.com/webrium/webrium" class="bg-blue-400 rounded text-white px-8 py-2">Get Start</a>
+    </div>
+
+  </div>
+
+
+  
+</body>
+
 </html>
