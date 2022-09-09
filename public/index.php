@@ -13,11 +13,11 @@ App::root(__DIR__.'/..');
 
 Debug::displayErrors(true);
 
-// load default directory structure
+// Load default directory structure
 Directory::initDefaultStructure();
 
-// load config
-File::source('config',['config.php','db.php']);
+// Load config
+File::source('config',['Config.php','DB.php']);
 
 // load routes
-File::source('routes',['web.php']);
+File::source('routes',['Web.php']);

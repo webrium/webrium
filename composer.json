@@ -5,9 +5,9 @@
   "require": {
     "php": ">=7.0.0 <8",
     "botfire/botfire": "*@stable",
-    "webrium/foxql": "^1.0.0",
     "webrium/core": "^0.2.0",
-    "phpmailer/phpmailer": "~6.1"
+    "phpmailer/phpmailer": "~6.1",
+    "webrium/foxdb": "dev-main"
   },
   "license": "MIT",
   "authors": [

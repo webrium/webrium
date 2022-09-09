@@ -1,8 +1,7 @@
 <?php
 use webrium\core\Route;
 
-
-Route::get('','indexController->index');
+Route::get('','IndexController->index');
 
 
 Route::notFound();

@@ -6,7 +6,7 @@ class indexController
 
   public function index()
   {
-    return view('welcome' , [ 'name' => 'Webrium Framework' ] );
+    return view('Welcome' , [ 'name' => 'Webrium Framework' ] );
   }
 
 }
