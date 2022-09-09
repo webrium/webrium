@@ -1,13 +1,13 @@
 {
   "name": "webrium/webrium",
-  "description": "PHP Micro Framework",
+  "description": "PHP Framework",
   "type": "project",
   "require": {
-    "php": ">=7.0.0 <8",
+    "php": ">=7.0.0",
     "botfire/botfire": "*@stable",
-    "webrium/core": "^0.2.0",
+    "webrium/core": "^1.0.0",
     "phpmailer/phpmailer": "~6.1",
-    "webrium/foxdb": "dev-main"
+    "webrium/foxdb": "^2.0.0"
   },
   "license": "MIT",
   "authors": [

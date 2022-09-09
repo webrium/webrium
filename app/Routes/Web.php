@@ -1,5 +1,5 @@
 <?php
-use webrium\core\Route;
+use Webrium\Route;
 
 Route::get('','IndexController->index');
 
