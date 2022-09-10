@@ -19,7 +19,7 @@ cd webrium & npm install
 
 ### Run Server
 ```
-npm run serve
+npm run dev
 ```
 
 
