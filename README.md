@@ -10,7 +10,16 @@ Webrium is a web application framework. We believe that development should be qu
 
 ### install
 ```
-composer create-project webrium/webrium
+$ composer create-project webrium/webrium
+```
+
+```
+cd webrium & npm install
+```
+
+### Run Server
+```
+npm run serve
 ```
 
 
