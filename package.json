@@ -11,6 +11,6 @@
   },
   "scripts": {
     "build:css": "postcss ./tailwindcss/input.css -o ./public/css/style.css --watch --minify",
-    "serve":"npm run build:css & php -S localhost:8000 -t public/"
+    "dev":"npm run build:css & php -S localhost:8000 -t public/"
   }
 }
