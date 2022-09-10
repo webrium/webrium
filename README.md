@@ -3,10 +3,11 @@
 
 Webrium is a web application framework. We believe that development should be quick, simple and light
 
-✔ Fast <br>
-✔ MVC <br>
-✔ Lightweight <br>
+✔ Fast and Lightweight <br>
+✔ MVC structure <br>
+✔ Tailwindcss is configured by default <br>
 
+<br>
 
 ### install
 ```
