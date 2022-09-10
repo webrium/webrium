@@ -32,4 +32,5 @@ npm run dev
  * [Blade Templates](https://github.com/webrium/webrium/wiki/Blade-Templates)
  * [View](https://github.com/webrium/webrium/wiki/View)
  * [Upload](https://github.com/webrium/webrium/wiki/Upload)
+ * [Query builder](https://github.com/webrium/foxdb)
  
