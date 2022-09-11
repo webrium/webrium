@@ -21,14 +21,19 @@ $ composer create-project webrium/webrium
 ```
 
 ```
-cd webrium & npm install
+$ cd webrium & npm install
 ```
 
 ### Run Server
 ```
-npm run dev
+$ npm run dev
 ```
 
+Then run the following address in your browser
+
+`http://localhost:8000`
+
+<br>
 
 ### Documentation
  
