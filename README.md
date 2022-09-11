@@ -15,7 +15,7 @@ Webrium is a web application framework. We believe that development should be qu
 
 <br>
 
-### install
+### Install
 ```
 $ composer create-project webrium/webrium
 ```
