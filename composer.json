@@ -16,12 +16,5 @@
       "email": "nvioir@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
-  "scripts": {
-  	"post-create-project-cmd": [
-      "php -r \"chmod( __DIR__ . '/storage/framework/views', 0777);\"",
-      "php -r \"chmod( __DIR__ . '/storage/framework/sessions', 0777);\"",
-  		"php -r \"chmod( __DIR__ . '/storage/logs', 0777);\""
-  	]
-   }
+  "minimum-stability": "dev"
 }
