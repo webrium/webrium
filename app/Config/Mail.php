@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
-use webrium\core\Mail;
+use Webrium\Mail;
 
 
 // Server settings
