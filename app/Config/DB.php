@@ -11,7 +11,7 @@ DB::addConnection('main', [
     'username'=>'root',
     'password'=>'1234',
 
-    'charset'=>Config::UTF8,
-    'collation'=>Config::UTF8_GENERAL_CI,
+    'charset'=>Config::UTF8MB4,
+    'collation'=>Config::UTF8MB4_GENERAL_CI,
     'fetch'=>Config::FETCH_CLASS
 ]);
