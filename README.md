@@ -22,6 +22,7 @@ $ composer create-project webrium/webrium
 
 ```
 $ cd webrium & npm install
+$ cp .env.example .env
 ```
 
 ### Run Server
