@@ -9,9 +9,9 @@ DB::addConnection('main', [
     'host'=>'localhost',
     'port'=>'3306',
 
-    'database'=> App::env('database', 'test'),
-    'username'=> App::env('username', 'root'),
-    'password'=> App::env('password', '1234'),
+    'database'=> env('database', 'test'),
+    'username'=> env('username', 'root'),
+    'password'=> env('password', '1234'),
 
     'charset'=>Config::UTF8MB4,
     'collation'=>Config::UTF8MB4_GENERAL_CI,
