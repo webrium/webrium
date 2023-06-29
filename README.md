@@ -46,7 +46,8 @@ Then run the following address in your browser
  * [JWT (JSON Web Token) Documentation](https://github.com/webrium/core/wiki/JWT-Documentation)
 
 ### Database Documentation
- * [Database and Query builder](https://github.com/webrium/foxdb)
+ - [Database and Query builder](https://github.com/webrium/foxdb)
+   - [Schema](https://github.com/webrium/foxdb/wiki/Schema)
  
  
  
