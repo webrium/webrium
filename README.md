@@ -7,7 +7,9 @@
 </div>
 
 ## About Webrium
-Webrium is a web application framework. We believe that development should be quick, simple and light
+
+Webrium is a web application framework that prioritizes quick development, simplicity, and lightness. It offers features like Routes for handling URL mappings,FoxDB for database operations, MVC architecture for organizing the code, and Blade for creating dynamic views
+
 
 ✔ Fast and Lightweight <br>
 ✔ MVC structure <br>
