@@ -37,11 +37,13 @@ Then run the following address in your browser
 <br>
 
 ### Core Documentation
- * [Routeing](https://github.com/webrium/core/wiki/Route-Class-Documentation)
  * [Blade Templates](https://github.com/webrium/webrium/wiki/Blade-Templates)
  * [View](https://github.com/webrium/webrium/wiki/View)
  * [Upload](https://github.com/webrium/webrium/wiki/Upload)
  * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
+ * [Route Documentation](https://github.com/webrium/core/wiki/Route-Class-Documentation)
+ * [Session Documentation](https://github.com/webrium/core/wiki/Session-Class-Documentation)
+ * [JWT (JSON Web Token) Documentation](https://github.com/webrium/core/wiki/JWT-Documentation)
 
 ### Database Documentation
  * [Database and Query builder](https://github.com/webrium/foxdb)
