@@ -36,15 +36,17 @@ Then run the following address in your browser
 
 <br>
 
-### Documentation
- 
- * [Routing](https://github.com/webrium/webrium/wiki/routing)
- * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
- * [URL Generation](https://github.com/webrium/webrium/wiki/URL-Generation)
+### Core Documentation
+ * [Routeing](https://github.com/webrium/core/wiki/Route-Class-Documentation)
  * [Blade Templates](https://github.com/webrium/webrium/wiki/Blade-Templates)
  * [View](https://github.com/webrium/webrium/wiki/View)
  * [Upload](https://github.com/webrium/webrium/wiki/Upload)
- * [Query builder](https://github.com/webrium/foxdb)
+ * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
+
+### Database Documentation
+ * [Database and Query builder](https://github.com/webrium/foxdb)
+ 
+ 
  
  <br>
  
