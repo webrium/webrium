@@ -6,6 +6,7 @@ use Webrium\App;
 use Webrium\Debug;
 use Webrium\File;
 use Webrium\Directory;
+use Webrium\Route;
 
 // init index path
 App::root(__DIR__.'/..');
@@ -20,4 +21,5 @@ Directory::initDefaultStructure();
 File::source('config',['Config.php','DB.php']);
 
 // load routes
-File::source('routes',['Web.php']);
+Route::source(['Web.php']);
+Route::run();
