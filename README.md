@@ -47,6 +47,7 @@ Then run the following address in your browser
  * [Session Documentation](https://github.com/webrium/core/wiki/Session-Class-Documentation)
  * [JWT (JSON Web Token) Documentation](https://github.com/webrium/core/wiki/JWT-Documentation)
  * [Hash And Password Documentation](https://github.com/webrium/core/wiki/Hash-Class-Documentation)
+ * [HTTP Class Documentation](https://github.com/webrium/core/wiki/HTTP-Class-Documentation)
 
 ### Database Documentation
  - [Database and Query builder](https://github.com/webrium/foxdb)
