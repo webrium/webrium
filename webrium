@@ -1,0 +1,22 @@
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+
+use Webrium\App;
+use Webrium\Console\GenerateModel;
+use Webrium\Console\GenerateController;
+use Webrium\Console\InitBot;
+
+
+$application = new Application();
+
+App::rootPath(__DIR__);
+
+$application->add(new GenerateModel());
+$application->add(new GenerateController());
+$application->add(new InitBot());
+
+$application->run();
