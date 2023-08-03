@@ -8,7 +8,7 @@
     "webrium/core": "^2.0.1",
     "phpmailer/phpmailer": "~6.1",
     "webrium/foxdb": "^2.0.0",
-    "webrium/console": "^1.0.0"
+    "webrium/console": "^1.0.1"
   },
   "license": "MIT",
   "authors": [
