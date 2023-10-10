@@ -3,7 +3,7 @@
   "description": "PHP Framework",
   "type": "project",
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=8.0.0",
     "botfire/botfire": "*@stable",
     "webrium/core": "^2.0.1",
     "phpmailer/phpmailer": "~6.1",
