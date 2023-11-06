@@ -5,17 +5,24 @@ use PHPMailer\PHPMailer\SMTP;
 use Webrium\Mail;
 
 
-// Server settings
-
 $mail = new PHPMailer(true);
 
-$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
-$mail->isSMTP();                                            // Send using SMTP
-$mail->Host       = 'mail.example.com';                    // Set the SMTP server to send through
-$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-$mail->Username   = 'info@example.com';                     // SMTP username
-$mail->Password   = 'password';                               // SMTP password
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-$mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+if(env('mail_is_smtp') == 'true'){
+  $mail->isSMTP(); // Send using SMTP
+  $mail->SMTPAuth = true; // Enable SMTP authentication
+}
+
+if(env('mail_smtp_debug') == 'true'){
+  $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
+}
+
+if(env('mail_smtp_tls') == 'true'){
+  $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+}
+
+$mail->Host       = env('mail_host');
+$mail->Username   = env('mail_username');
+$mail->Password   = env('mail_password');
+$mail->Port       = env('mail_port'); // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
 Mail::addConfig('main', $mail );
