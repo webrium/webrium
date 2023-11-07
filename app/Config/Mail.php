@@ -24,5 +24,6 @@ $mail->Host       = env('mail_host');
 $mail->Username   = env('mail_username');
 $mail->Password   = env('mail_password');
 $mail->Port       = env('mail_port'); // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+$mail->CharSet = 'UTF-8';
 
 Mail::addConfig('main', $mail );
