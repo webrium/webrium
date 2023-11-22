@@ -48,6 +48,7 @@ Then run the following address in your browser
  * [Hash And Password Documentation](https://github.com/webrium/core/wiki/Hash-Class-Documentation)
  * [HTTP Class Documentation](https://github.com/webrium/core/wiki/HTTP-Class-Documentation)
  * [Email Documentation](https://github.com/webrium/core/wiki/Email-Documentation)
+ * [Console Documentation](https://github.com/webrium/console)
 
 ### Database Documentation
  - [Database and Query builder](https://github.com/webrium/foxdb)
