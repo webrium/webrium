@@ -53,7 +53,11 @@ Then run the following address in your browser
 
 ### Database Documentation
  - [Database and Query builder](https://github.com/webrium/foxdb)
+   - [Select](https://github.com/webrium/foxdb#retrieving-all-rows-from-a-table)
+   - [Insert](https://github.com/webrium/foxdb#insert-statements)
+   - [Update](https://github.com/webrium/foxdb#update-statements)
    - [Schema](https://github.com/webrium/foxdb/wiki/Schema)
+   - [Eloquent](https://github.com/webrium/foxdb/wiki/eloquent)
  
  
  
