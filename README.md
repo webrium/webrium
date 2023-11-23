@@ -49,6 +49,7 @@ Then run the following address in your browser
  * [HTTP Class Documentation](https://github.com/webrium/core/wiki/HTTP-Class-Documentation)
  * [Email Documentation](https://github.com/webrium/core/wiki/Email-Documentation)
  * [Console Documentation](https://github.com/webrium/console)
+ * [Form Validation Documentation](https://github.com/webrium/core/wiki/FormValidation-Class-Documentation)
 
 ### Database Documentation
  - [Database and Query builder](https://github.com/webrium/foxdb)
