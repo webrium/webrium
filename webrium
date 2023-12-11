@@ -3,12 +3,14 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 
 use Webrium\App;
 use Webrium\File;
 use Webrium\Debug;
 use Webrium\Directory;
+use Webrium\Event;
 
 
 use Webrium\Console\GenerateModel;
@@ -23,7 +25,16 @@ use Webrium\Console\InitBot;
 
 App::root(__DIR__);
 Debug::displayErrors(true);
+Debug::$ErrorView = true;
 Directory::initDefaultStructure();
+
+
+Event::on('error',function($error){
+    $output = new ConsoleOutput();
+    $output->write('<error>'.$error['message']."</error>\n");
+    die();
+});
+
 
 // Load config
 File::source('config',['Config.php','DB.php', 'Console.php']);
