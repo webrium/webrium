@@ -20,7 +20,7 @@ use Webrium\Console\DbAction;
 use Webrium\Console\TableAction;
 use Webrium\Console\LogAction;
 use Webrium\Console\InitBot;
-
+use Webrium\Console\InitWebrium;
 
 
 App::root(__DIR__);
@@ -43,6 +43,7 @@ File::source('config',['Config.php','DB.php', 'Console.php']);
 
 $application = new Application();
 
+$application->add(new InitWebrium());
 $application->add(new GenerateModel());
 $application->add(new GenerateController());
 $application->add(new InitBot());
