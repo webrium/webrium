@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "concurrently": "^7.4.0"
+    "concurrently": "^9.1.2"
   },
   "scripts": {
     "build:css": "npx @tailwindcss/cli -i ./public/css/index.css -o ./public/css/style.css --watch",
