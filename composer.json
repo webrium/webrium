@@ -5,9 +5,9 @@
   "require": {
     "php": ">=8.0.0",
     "botfire/botfire": "*@stable",
-    "webrium/core": "^2.0.1",
+    "webrium/core": "^2.1.7",
     "phpmailer/phpmailer": "~6.1",
-    "webrium/foxdb": "^3.0.0",
+    "webrium/foxdb": "^3.0.2",
     "webrium/console": "^1.0.1"
   },
   "license": "MIT",
@@ -19,7 +19,7 @@
   ],
   "minimum-stability": "dev",
   "scripts": {
-    "serve":"php -S localhost:8000 -t public",
+    "serve":"php -S 127.0.0.1:8000 -t public",
     "post-root-package-install": [
       "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ]
