@@ -53,6 +53,3 @@ Then run the following address in your browser
 
 ### [💾 Database and Query builder Documentation](https://github.com/webrium/foxdb)  
  <br>
- 
- ## Using docker image
-  - [Show Docker image Docs](https://github.com/webrium/docker-image)
