@@ -51,16 +51,7 @@ Then run the following address in your browser
  * [Console Documentation](https://github.com/webrium/console)
  * [Form Validation Documentation](https://github.com/webrium/core/wiki/FormValidation-Class-Documentation)
 
-### Database Documentation
- - [Database and Query builder](https://github.com/webrium/foxdb)
-   - [Select](https://github.com/webrium/foxdb#retrieving-all-rows-from-a-table)
-   - [Insert](https://github.com/webrium/foxdb#insert-statements)
-   - [Update](https://github.com/webrium/foxdb#update-statements)
-   - [Schema](https://github.com/webrium/foxdb/wiki/Schema)
-   - [Eloquent](https://github.com/webrium/foxdb/wiki/eloquent)
- 
- 
- 
+### [💾 Database and Query builder Documentation](https://github.com/webrium/foxdb)  
  <br>
  
  ## Using docker image
