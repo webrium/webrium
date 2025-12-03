@@ -2,7 +2,6 @@
 
 use Foxdb\DB;
 use Foxdb\Config;
-use Webrium\App;
 
 
 DB::addConnection('main', [
