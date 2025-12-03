@@ -8,18 +8,28 @@ use Webrium\File;
 use Webrium\Directory;
 use Webrium\Route;
 
-// init index path
-App::root(__DIR__.'/..');
+/**
+ * -------------------------------------------------------------
+ *  Application Bootstrap
+ * -------------------------------------------------------------
+ *  Sets application paths, loads configuration files,
+ *  initializes directory structure, and registers routes.
+ */
 
+// Set the application root directory
+App::root(__DIR__ . '/..');
 
+// Enable error display (development mode)
 Debug::displayErrors(true);
 
-// Load default directory structure
+// Initialize default directory structure (storage, logs, cache, etc.)
 Directory::initDefaultStructure();
 
-// Load config
-File::source('config',['Config.php','DB.php']);
+// Load configuration files
+File::source('config', ['DB.php', 'Config.php']);
 
-// load routes
+// Load route definitions
 Route::source(['Web.php']);
+
+// Run the routing engine
 Route::run();
