@@ -4,10 +4,9 @@
   "type": "project",
   "require": {
     "php": ">=8.1.0",
-    "webrium/core": "^2.1.7",
+    "webrium/core": "3.0.0@dev",
     "phpmailer/phpmailer": "~6.1",
     "webrium/foxdb": "^3.0.2",
-    "webrium/console": "^1.0.1",
     "zogjs/zog-php": "dev-main"
   },
   "license": "MIT",
