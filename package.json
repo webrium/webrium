@@ -9,9 +9,10 @@
     "vite-plugin-live-reload": "^3.0.5"
   },
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite --host 127.0.0.1 & php -S 127.0.0.1:8000 -t public",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "php -S 127.0.0.1:8001 -t public"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.3",
