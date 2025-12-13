@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/css/style.css" rel="stylesheet">
+
+  @raw( vite_assets() )
 </head>
 
 <body class="flex bg-gray-800 justify-center">
@@ -22,7 +23,7 @@
     </div>
 
     <div class="w-full flex justify-center mt-4">
-      <h1 class="text-3xl font-bold text-white"> {{ $name }} </h1>
+      <h1 class="text-3xl font-bold text-white"> @{{ $name }} </h1>
     </div>
 
     <div class="mt-10 mx-auto flex justify-center">
