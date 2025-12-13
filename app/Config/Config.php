@@ -4,7 +4,7 @@ use Webrium\Directory;
 use Zog\Zog;
 
 // sessions save directory
-Session::set_path(Directory::path('sessions'));
+Session::setSavePath(Directory::path('sessions'));
 
 
 
