@@ -1,0 +1,238 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "96601d1d7de3ab94a491bf8176a38ae2",
+    "packages": [
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "6.12.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/d1ac35d784bf9f5e61b424901d5a014967f15b12",
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-hash": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "doctrine/annotations": "^1.2.6 || ^1.13.3",
+                "php-parallel-lint/php-console-highlighter": "^1.0.0",
+                "php-parallel-lint/php-parallel-lint": "^1.3.2",
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.7.2",
+                "yoast/phpunit-polyfills": "^1.0.4"
+            },
+            "suggest": {
+                "decomplexity/SendOauth2": "Adapter for using XOAUTH2 authentication",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
+                "ext-openssl": "Needed for secure SMTP sending and DKIM signing",
+                "greew/oauth2-azure-provider": "Needed for Microsoft Azure XOAUTH2 authentication",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
+                "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "support": {
+                "issues": "https://github.com/PHPMailer/PHPMailer/issues",
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.12.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Synchro",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-10-15T16:49:08+00:00"
+        },
+        {
+            "name": "webrium/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webrium/core.git",
+                "reference": "c6edd4e78c8eb964f2d6b10feff7448b4b6a8644"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webrium/core/zipball/c6edd4e78c8eb964f2d6b10feff7448b4b6a8644",
+                "reference": "c6edd4e78c8eb964f2d6b10feff7448b4b6a8644",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webrium\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "benjamin-khalife",
+                    "email": "nvioir@gmail.com"
+                }
+            ],
+            "description": "PHP Framework",
+            "support": {
+                "issues": "https://github.com/webrium/core/issues",
+                "source": "https://github.com/webrium/core/tree/master"
+            },
+            "time": "2025-12-27T18:34:13+00:00"
+        },
+        {
+            "name": "webrium/foxdb",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webrium/foxdb.git",
+                "reference": "8fdcb185cb889358e3569f8a7e54c40f5335580a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webrium/foxdb/zipball/8fdcb185cb889358e3569f8a7e54c40f5335580a",
+                "reference": "8fdcb185cb889358e3569f8a7e54c40f5335580a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9",
+                "webrium/core": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Foxdb\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "benjamin-khalife",
+                    "email": "nvioir@gmail.com"
+                }
+            ],
+            "description": "Foxdb query builder",
+            "support": {
+                "issues": "https://github.com/webrium/foxdb/issues",
+                "source": "https://github.com/webrium/foxdb/tree/3.1.1"
+            },
+            "time": "2025-09-12T12:36:08+00:00"
+        },
+        {
+            "name": "zogjs/zog-php",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zogjs/zog-php.git",
+                "reference": "39c55fe64a346a58c466be10de0034bc9b13fd0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zogjs/zog-php/zipball/39c55fe64a346a58c466be10de0034bc9b13fd0b",
+                "reference": "39c55fe64a346a58c466be10de0034bc9b13fd0b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^12"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zog\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "BEN Khalife",
+                    "email": "benkhalife@proton.me"
+                }
+            ],
+            "description": "Lightweight PHP template engine with hybrid static caching (no eval).",
+            "homepage": "https://zogjs.com",
+            "support": {
+                "issues": "https://github.com/zogjs/zog-php/issues",
+                "source": "https://github.com/zogjs/zog-php"
+            },
+            "time": "2025-12-13T06:36:24+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "webrium/core": 20,
+        "zogjs/zog-php": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.1.0"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}

@@ -35,7 +35,7 @@ File::source('config', ['DB.php', 'Config.php']);
 
 
 // Load route definitions
-Route::source(['Web.php']);
+Route::source(['Web.php', 'Admin.php']);
 
 
 // Run the routing engine

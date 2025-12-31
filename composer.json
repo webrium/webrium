@@ -4,7 +4,7 @@
   "type": "project",
   "require": {
     "php": ">=8.1.0",
-    "webrium/core": "3.0.0@dev",
+    "webrium/core": "dev-master",
     "phpmailer/phpmailer": "~6.1",
     "webrium/foxdb": "^3.0.2",
     "zogjs/zog-php": "dev-main"
