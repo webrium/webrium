@@ -1,5 +1,5 @@
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" z-if="!isLoading">
   <!-- Page Header -->
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
     <div>
@@ -24,7 +24,7 @@
           </svg>
         </div>
         <div class="stat-title">Total Categories</div>
-        <div class="stat-value text-primary">@{{ $stats['total'] ?? 0 }}</div>
+        <div class="stat-value text-primary">{{ stats.total }}</div>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
           </svg>
         </div>
         <div class="stat-title">Active</div>
-        <div class="stat-value text-success">@{{ $stats['active'] ?? 0 }}</div>
+        <div class="stat-value text-success">{{ stats.active }}</div>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
           </svg>
         </div>
         <div class="stat-title">Inactive</div>
-        <div class="stat-value text-warning">@{{ $stats['inactive'] ?? 0 }}</div>
+        <div class="stat-value text-warning">{{ stats.inactive }}</div>
       </div>
     </div>
 
@@ -60,7 +60,7 @@
           </svg>
         </div>
         <div class="stat-title">Root Categories</div>
-        <div class="stat-value text-info">@{{ $stats['root'] ?? 0 }}</div>
+        <div class="stat-value text-info">{{ stats.root }}</div>
       </div>
     </div>
   </div>
@@ -141,14 +141,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr z-for="category in filteredCategories" :key="category.id">
+            <tr z-for="category in paginatedCategories" :key="category.id">
               <th>
                 <label>
                   <input 
                     type="checkbox" 
                     class="checkbox" 
                     :value="category.id"
-                    z-model="selectedIds"
+                    :checked="selectedIds.includes(category.id)"
+                    @change="toggleSelection(category.id)"
                   />
                 </label>
               </th>
@@ -161,13 +162,13 @@
                   </div>
                   <div z-else class="avatar placeholder">
                     <div class="bg-neutral text-neutral-content mask mask-squircle w-12">
-                      <span class="text-xl">{{ category.name.charAt(0).toUpperCase() }}</span>
+                      <span class="text-xl">{{ category.name ? category.name.charAt(0).toUpperCase() : '' }}</span>
                     </div>
                   </div>
                   <div>
                     <div class="font-bold">{{ category.name }}</div>
                     <div class="text-sm opacity-50" z-if="category.description">
-                      {{ category.description.substring(0, 50) }}{{ category.description.length > 50 ? '...' : '' }}
+                      {{ category.description.length > 50 ? category.description.substring(0, 50) + '...' : category.description }}
                     </div>
                   </div>
                 </div>
@@ -194,7 +195,7 @@
               </td>
               <td>
                 <span class="badge badge-primary badge-outline">
-                  {{ category.products_count ?? 0 }}
+                  {{ category.products_count || 0 }}
                 </span>
               </td>
               <td>
@@ -227,7 +228,7 @@
         </table>
 
         <!-- Empty State -->
-        <div z-if="filteredCategories.length === 0" class="text-center py-12">
+        <div z-if="paginatedCategories.length === 0" class="text-center py-12">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-base-content/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
           </svg>
@@ -285,6 +286,11 @@
   </div>
 </div>
 
+<!-- Loading State -->
+<div z-if="isLoading" class="flex items-center justify-center min-h-screen">
+  <span class="loading loading-spinner loading-lg"></span>
+</div>
+
 <!-- Delete Confirmation Modal -->
 <dialog id="delete_modal" class="modal">
   <div class="modal-box">
@@ -304,4 +310,24 @@
     <button>close</button>
   </form>
 </dialog>
+
+<!-- Success Toast -->
+<div z-if="showSuccessToast" class="toast toast-top toast-end">
+  <div class="alert alert-success">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>{{ successMessage }}</span>
+  </div>
+</div>
+
+<!-- Error Toast -->
+<div z-if="showErrorToast" class="toast toast-top toast-end">
+  <div class="alert alert-error">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>{{ errorMessage }}</span>
+  </div>
+</div>
 @endsection

@@ -1,13 +1,13 @@
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" z-if="!isLoading">
   <!-- Page Header -->
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
     <div>
       <h2 class="text-2xl font-bold text-base-content">
-        {{ $category ? 'Edit Category' : 'Add New Category' }}
+        {{ formData.id ? 'Edit Category' : 'Add New Category' }}
       </h2>
       <p class="text-base-content/60 mt-1">
-        {{ $category ? 'Update category information' : 'Create a new category for your products or posts' }}
+        {{ formData.id ? 'Update category information' : 'Create a new category for your products or posts' }}
       </p>
     </div>
     <a href="/admin/categories" class="btn btn-ghost gap-2">
@@ -37,12 +37,13 @@
                 name="name"
                 placeholder="e.g., Electronics" 
                 class="input input-bordered w-full"
+                :class="{ 'input-error': errors.name }"
                 z-model="formData.name"
                 @input="generateSlug"
                 required
               />
-              <label class="label">
-                <span class="label-text-alt text-error" z-if="errors.name">{{ errors.name }}</span>
+              <label class="label" z-if="errors.name">
+                <span class="label-text-alt text-error">{{ errors.name }}</span>
               </label>
             </div>
 
@@ -56,11 +57,12 @@
                 name="slug"
                 placeholder="electronics" 
                 class="input input-bordered w-full font-mono text-sm"
+                :class="{ 'input-error': errors.slug }"
                 z-model="formData.slug"
                 required
               />
               <label class="label">
-                <span class="label-text-alt">URL-friendly version of the name</span>
+                <span class="label-text-alt" z-if="!errors.slug">URL-friendly version of the name</span>
                 <span class="label-text-alt text-error" z-if="errors.slug">{{ errors.slug }}</span>
               </label>
             </div>
@@ -75,6 +77,7 @@
                 class="textarea textarea-bordered h-24" 
                 placeholder="Brief description of the category..."
                 z-model="formData.description"
+                maxlength="500"
               ></textarea>
               <label class="label">
                 <span class="label-text-alt">{{ formData.description.length }} / 500 characters</span>
@@ -99,6 +102,7 @@
                 placeholder="SEO title for search engines" 
                 class="input input-bordered w-full"
                 z-model="formData.meta_title"
+                maxlength="60"
               />
               <label class="label">
                 <span class="label-text-alt">{{ formData.meta_title.length }} / 60 characters</span>
@@ -115,6 +119,7 @@
                 class="textarea textarea-bordered h-20" 
                 placeholder="SEO description for search engines..."
                 z-model="formData.meta_description"
+                maxlength="160"
               ></textarea>
               <label class="label">
                 <span class="label-text-alt">{{ formData.meta_description.length }} / 160 characters</span>
@@ -214,7 +219,7 @@
             <h3 class="card-title mb-4">Category Image</h3>
             
             <!-- Image Preview -->
-            <div z-if="formData.image || imagePreview" class="mb-4">
+            <div z-if="imagePreview || formData.image" class="mb-4">
               <img 
                 :src="imagePreview || formData.image" 
                 alt="Category image"
@@ -301,7 +306,7 @@
               :disabled="isSubmitting"
             >
               <span z-if="!isSubmitting">
-                {{ $category ? 'Update Category' : 'Create Category' }}
+                {{ formData.id ? 'Update Category' : 'Create Category' }}
               </span>
               <span z-else class="loading loading-spinner"></span>
             </button>
@@ -325,6 +330,11 @@
       </div>
     </div>
   </form>
+</div>
+
+<!-- Loading State -->
+<div z-if="isLoading" class="flex items-center justify-center min-h-screen">
+  <span class="loading loading-spinner loading-lg"></span>
 </div>
 
 <!-- Success Toast -->

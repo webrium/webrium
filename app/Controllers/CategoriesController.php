@@ -7,142 +7,199 @@ use Foxdb\DB;
 
 class CategoriesController
 {
-
+  /**
+   * Get categories data for API
+   */
   public function indexData()
   {
-    $categories = Category::allWithParent();
-    // return 'ok';
-    // Calculate statistics
-    $stats = [
-      'total' => Category::count(),
-      'active' => Category::where('status', 'active')->count(),
-      'inactive' => Category::where('status', 'inactive')->count(),
-      'root' => Category::whereNull('parent_id')->count()
-    ];
+    try {
+      // Get all categories with parent information
+      $categories = Category::allWithParent();
 
-    // Add products count for each category
-    foreach ($categories as $category) {
-      $category->products_count = Category::countProducts($category->id);
+      // Calculate statistics
+      $stats = [
+        'total' => Category::count(),
+        'active' => Category::where('status', 'active')->count(),
+        'inactive' => Category::where('status', 'inactive')->count(),
+        'root' => Category::whereNull('parent_id')->count()
+      ];
+
+      // Add products count for each category
+      foreach ($categories as $category) {
+        $category->products_count = Category::countProducts($category->id);
+      }
+
+      return $this->jsonResponse([
+        'ok' => true,
+        'categories' => $categories,
+        'stats' => $stats
+      ]);
+    } catch (\Exception $e) {
+      error_log("Error in CategoriesController@indexData: " . $e->getMessage());
+      return $this->jsonResponse([
+        'ok' => false,
+        'message' => 'Failed to load categories'
+      ], 500);
     }
-
-    return [
-      'categories' => $categories,
-      'stats' => $stats
-    ];
   }
+
   /**
-   * Display all categories
+   * Display categories page
    */
   public function index()
   {
-
-    return Zog::render('page_loaders/admin/categories_loader.php', $this->indexData());
+    return Zog::render('page_loaders/admin/categories_loader.php', [
+      'title' => 'Categories Management',
+      'pageTitle' => 'Categories'
+    ]);
   }
 
   /**
-   * Show create category form
+   * Get parent categories for form (API)
    */
-  public function create()
+  public function getParents()
   {
     try {
-      // Get all categories except current one (for parent selection)
-      $parentCategories = Category::orderBy('name')->get();
+      $excludeId = $_POST['exclude_id'] ?? null;
+      
+      $query = Category::orderBy('name');
+      
+      if ($excludeId) {
+        $query->where('id', '!=', $excludeId);
+      }
+      
+      $categories = $query->get();
 
-      return Zog::render('page_loaders/admin/category_form_loader.php', [
-        'parentCategories' => $parentCategories
+      return $this->jsonResponse([
+        'ok' => true,
+        'categories' => $categories
       ]);
     } catch (\Exception $e) {
-      error_log("Error in CategoriesController@create: " . $e->getMessage());
-      return $this->errorResponse('Failed to load form');
+      error_log("Error in CategoriesController@getParents: " . $e->getMessage());
+      return $this->jsonResponse([
+        'ok' => false,
+        'message' => 'Failed to load parent categories'
+      ], 500);
     }
   }
 
   /**
-   * Store new category
+   * Get single category (API)
+   */
+  public function show($id)
+  {
+    try {
+      $category = Category::find($id);
+
+      if (!$category) {
+        return $this->jsonResponse([
+          'ok' => false,
+          'message' => 'Category not found'
+        ], 404);
+      }
+
+      return $this->jsonResponse([
+        'ok' => true,
+        'category' => $category
+      ]);
+    } catch (\Exception $e) {
+      error_log("Error in CategoriesController@show: " . $e->getMessage());
+      return $this->jsonResponse([
+        'ok' => false,
+        'message' => 'Failed to load category'
+      ], 500);
+    }
+  }
+
+  /**
+   * Show create category page
+   */
+  public function create()
+  {
+    return Zog::render('page_loaders/admin/category_form_loader.php', [
+      'title' => 'Add New Category',
+      'pageTitle' => 'Add New Category'
+    ]);
+  }
+
+  /**
+   * Show edit category page
+   */
+  public function edit($id)
+  {
+    return Zog::render('page_loaders/admin/category_form_loader.php', [
+      'title' => 'Edit Category',
+      'pageTitle' => 'Edit Category'
+    ]);
+  }
+
+  /**
+   * Store new category (API)
    */
   public function store()
   {
     try {
+      // Get JSON data
+      $data = $this->getJsonInput();
+      
       // Validate required fields
-      $errors = $this->validateCategory($_POST);
-
+      $errors = $this->validateCategory($data);
+      
       if (!empty($errors)) {
-        return $this->jsonResponse(['success' => false, 'errors' => $errors], 422);
+        return $this->jsonResponse([
+          'ok' => false,
+          'errors' => $errors,
+          'message' => 'Validation failed'
+        ], 422);
       }
 
       // Generate slug if not provided
-      $slug = $_POST['slug'] ?? Category::generateSlug($_POST['name']);
+      $slug = $data['slug'] ?? Category::generateSlug($data['name']);
 
       // Check if slug already exists
       if (Category::where('slug', $slug)->first()) {
         return $this->jsonResponse([
-          'success' => false,
-          'errors' => ['slug' => 'This slug already exists']
+          'ok' => false, 
+          'errors' => ['slug' => 'This slug already exists'],
+          'message' => 'Slug already exists'
         ], 422);
       }
 
       // Prepare data
-      $data = [
-        'name' => trim($_POST['name']),
+      $insertData = [
+        'name' => trim($data['name']),
         'slug' => $slug,
-        'description' => $_POST['description'] ?? null,
-        'parent_id' => !empty($_POST['parent_id']) ? (int) $_POST['parent_id'] : null,
-        'image' => $_POST['image'] ?? null,
-        'icon' => $_POST['icon'] ?? null,
-        'status' => $_POST['status'] ?? 'active',
-        'order' => isset($_POST['order']) ? (int) $_POST['order'] : 0,
-        'meta_title' => $_POST['meta_title'] ?? null,
-        'meta_description' => $_POST['meta_description'] ?? null,
-        'meta_keywords' => $_POST['meta_keywords'] ?? null
+        'description' => $data['description'] ?? null,
+        'parent_id' => !empty($data['parent_id']) ? (int)$data['parent_id'] : null,
+        'image' => $data['image'] ?? null,
+        'icon' => $data['icon'] ?? null,
+        'status' => $data['status'] ?? 'active',
+        'order' => isset($data['order']) ? (int)$data['order'] : 0,
+        'meta_title' => $data['meta_title'] ?? null,
+        'meta_description' => $data['meta_description'] ?? null,
+        'meta_keywords' => $data['meta_keywords'] ?? null
       ];
 
       // Insert category
-      $id = DB::table('categories')->insertGetId($data);
+      $id = DB::table('categories')->insertGetId($insertData);
 
       return $this->jsonResponse([
-        'success' => true,
+        'ok' => true,
         'message' => 'Category created successfully',
-        'id' => $id,
-        'redirect' => '/admin/categories'
+        'id' => $id
       ]);
 
     } catch (\Exception $e) {
       error_log("Error in CategoriesController@store: " . $e->getMessage());
       return $this->jsonResponse([
-        'success' => false,
+        'ok' => false,
         'message' => 'Failed to create category: ' . $e->getMessage()
       ], 500);
     }
   }
 
   /**
-   * Show edit category form
-   */
-  public function edit($id)
-  {
-    try {
-      $category = Category::find($id);
-
-      if (!$category) {
-        return $this->errorResponse('Category not found', 404);
-      }
-
-      // Get all categories except current one (for parent selection)
-      $parentCategories = Category::where('id', '!=', $id)->orderBy('name')->get();
-
-      return Zog::render('page_loaders/admin/category_form_loader.php', [
-        'category' => $category,
-        'parentCategories' => $parentCategories
-      ]);
-
-    } catch (\Exception $e) {
-      error_log("Error in CategoriesController@edit: " . $e->getMessage());
-      return $this->errorResponse('Failed to load category');
-    }
-  }
-
-  /**
-   * Update category
+   * Update category (API)
    */
   public function update($id)
   {
@@ -151,74 +208,82 @@ class CategoriesController
 
       if (!$category) {
         return $this->jsonResponse([
-          'success' => false,
+          'ok' => false,
           'message' => 'Category not found'
         ], 404);
       }
 
-      // Validate required fields
-      $errors = $this->validateCategory($_POST);
+      // Get JSON data
+      $data = $this->getJsonInput();
 
+      // Validate required fields
+      $errors = $this->validateCategory($data);
+      
       if (!empty($errors)) {
-        return $this->jsonResponse(['success' => false, 'errors' => $errors], 422);
+        return $this->jsonResponse([
+          'ok' => false,
+          'errors' => $errors,
+          'message' => 'Validation failed'
+        ], 422);
       }
 
       // Generate slug if not provided
-      $slug = $_POST['slug'] ?? Category::generateSlug($_POST['name'], $id);
+      $slug = $data['slug'] ?? Category::generateSlug($data['name'], $id);
 
       // Check if slug already exists (excluding current category)
       $existingSlug = Category::where('slug', $slug)->where('id', '!=', $id)->first();
       if ($existingSlug) {
         return $this->jsonResponse([
-          'success' => false,
-          'errors' => ['slug' => 'This slug already exists']
+          'ok' => false, 
+          'errors' => ['slug' => 'This slug already exists'],
+          'message' => 'Slug already exists'
         ], 422);
       }
 
       // Check for circular parent reference
-      $parentId = !empty($_POST['parent_id']) ? (int) $_POST['parent_id'] : null;
+      $parentId = !empty($data['parent_id']) ? (int)$data['parent_id'] : null;
       if ($parentId && $this->isCircularReference($id, $parentId)) {
         return $this->jsonResponse([
-          'success' => false,
-          'errors' => ['parent_id' => 'Cannot set category as its own descendant']
+          'ok' => false,
+          'errors' => ['parent_id' => 'Cannot set category as its own descendant'],
+          'message' => 'Circular reference detected'
         ], 422);
       }
 
       // Prepare data
-      $data = [
-        'name' => trim($_POST['name']),
+      $updateData = [
+        'name' => trim($data['name']),
         'slug' => $slug,
-        'description' => $_POST['description'] ?? null,
+        'description' => $data['description'] ?? null,
         'parent_id' => $parentId,
-        'image' => $_POST['image'] ?? null,
-        'icon' => $_POST['icon'] ?? null,
-        'status' => $_POST['status'] ?? 'active',
-        'order' => isset($_POST['order']) ? (int) $_POST['order'] : 0,
-        'meta_title' => $_POST['meta_title'] ?? null,
-        'meta_description' => $_POST['meta_description'] ?? null,
-        'meta_keywords' => $_POST['meta_keywords'] ?? null
+        'image' => $data['image'] ?? null,
+        'icon' => $data['icon'] ?? null,
+        'status' => $data['status'] ?? 'active',
+        'order' => isset($data['order']) ? (int)$data['order'] : 0,
+        'meta_title' => $data['meta_title'] ?? null,
+        'meta_description' => $data['meta_description'] ?? null,
+        'meta_keywords' => $data['meta_keywords'] ?? null
       ];
 
       // Update category
-      DB::table('categories')->where('id', $id)->update($data);
+      DB::table('categories')->where('id', $id)->update($updateData);
 
       return $this->jsonResponse([
-        'success' => true,
-        'message' => 'Category updated successfully',
-        'redirect' => '/admin/categories'
+        'ok' => true,
+        'message' => 'Category updated successfully'
       ]);
 
     } catch (\Exception $e) {
       error_log("Error in CategoriesController@update: " . $e->getMessage());
       return $this->jsonResponse([
-        'success' => false,
+        'ok' => false,
         'message' => 'Failed to update category: ' . $e->getMessage()
       ], 500);
     }
   }
 
   /**
-   * Delete category
+   * Delete category (API)
    */
   public function delete($id)
   {
@@ -227,7 +292,7 @@ class CategoriesController
 
       if (!$category) {
         return $this->jsonResponse([
-          'success' => false,
+          'ok' => false,
           'message' => 'Category not found'
         ], 404);
       }
@@ -235,7 +300,7 @@ class CategoriesController
       // Check if category has children
       if (Category::hasChildren($id)) {
         return $this->jsonResponse([
-          'success' => false,
+          'ok' => false,
           'message' => 'Cannot delete category with sub-categories. Delete sub-categories first.'
         ], 422);
       }
@@ -244,7 +309,7 @@ class CategoriesController
       $productsCount = Category::countProducts($id);
       if ($productsCount > 0) {
         return $this->jsonResponse([
-          'success' => false,
+          'ok' => false,
           'message' => "Cannot delete category with {$productsCount} products. Move or delete products first."
         ], 422);
       }
@@ -253,31 +318,32 @@ class CategoriesController
       DB::table('categories')->where('id', $id)->delete();
 
       return $this->jsonResponse([
-        'success' => true,
+        'ok' => true,
         'message' => 'Category deleted successfully'
       ]);
 
     } catch (\Exception $e) {
       error_log("Error in CategoriesController@delete: " . $e->getMessage());
       return $this->jsonResponse([
-        'success' => false,
+        'ok' => false,
         'message' => 'Failed to delete category: ' . $e->getMessage()
       ], 500);
     }
   }
 
   /**
-   * Bulk actions
+   * Bulk actions (API)
    */
   public function bulkAction()
   {
     try {
-      $action = $_POST['action'] ?? null;
-      $ids = $_POST['ids'] ?? [];
+      $data = $this->getJsonInput();
+      $action = $data['action'] ?? null;
+      $ids = $data['ids'] ?? [];
 
       if (!$action || empty($ids)) {
         return $this->jsonResponse([
-          'success' => false,
+          'ok' => false,
           'message' => 'Invalid request'
         ], 422);
       }
@@ -310,13 +376,13 @@ class CategoriesController
 
         default:
           return $this->jsonResponse([
-            'success' => false,
+            'ok' => false,
             'message' => 'Unknown action'
           ], 422);
       }
 
       return $this->jsonResponse([
-        'success' => true,
+        'ok' => true,
         'message' => "{$affected} categories {$action}d successfully",
         'affected' => $affected
       ]);
@@ -324,27 +390,27 @@ class CategoriesController
     } catch (\Exception $e) {
       error_log("Error in CategoriesController@bulkAction: " . $e->getMessage());
       return $this->jsonResponse([
-        'success' => false,
+        'ok' => false,
         'message' => 'Failed to perform bulk action: ' . $e->getMessage()
       ], 500);
     }
   }
 
   /**
-   * Get category tree (AJAX)
+   * Get category tree (API)
    */
   public function tree()
   {
     try {
       $tree = Category::tree();
       return $this->jsonResponse([
-        'success' => true,
+        'ok' => true,
         'data' => $tree
       ]);
     } catch (\Exception $e) {
       error_log("Error in CategoriesController@tree: " . $e->getMessage());
       return $this->jsonResponse([
-        'success' => false,
+        'ok' => false,
         'message' => 'Failed to load category tree'
       ], 500);
     }
@@ -392,7 +458,7 @@ class CategoriesController
     }
 
     $parent = Category::find($parentId);
-
+    
     while ($parent && $parent->parent_id) {
       if ($parent->parent_id == $categoryId) {
         return true;
@@ -404,6 +470,15 @@ class CategoriesController
   }
 
   /**
+   * Get JSON input from request body
+   */
+  private function getJsonInput()
+  {
+    $json = file_get_contents('php://input');
+    return json_decode($json, true) ?? [];
+  }
+
+  /**
    * Return JSON response
    */
   private function jsonResponse($data, $status = 200)
@@ -412,18 +487,5 @@ class CategoriesController
     header('Content-Type: application/json');
     echo json_encode($data);
     exit;
-  }
-
-  /**
-   * Return error page
-   */
-  private function errorResponse($message, $code = 500)
-  {
-    http_response_code($code);
-    return Zog::render('pages/error.php', [
-      'title' => 'Error',
-      'message' => $message,
-      'code' => $code
-    ]);
   }
 }

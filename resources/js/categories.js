@@ -1,4 +1,4 @@
-import { createApp, reactive, ref, computed, nextTick } from 'zogjs';
+import { createApp, reactive, ref, computed } from 'zogjs';
 import { ZogHttpPlugin, $http } from '@zogjs/http';
 
 /**
@@ -11,16 +11,25 @@ createApp(() => {
   const filteredCategories = reactive([]);
   const selectedIds = reactive([]);
   const parentCategories = reactive([]);
-
+  
+  const stats = reactive({
+    total: 0,
+    active: 0,
+    inactive: 0,
+    root: 0
+  });
+  
   const searchQuery = ref('');
   const statusFilter = ref('');
   const parentFilter = ref('');
   const sortBy = ref('order');
-
+  
   const currentPage = ref(1);
   const perPage = ref(10);
-  const totalCategories = ref(0);
-
+  
+  const isLoading = ref(false);
+  const isSubmitting = ref(false);
+  
   const categoryToDelete = reactive({
     id: null,
     name: '',
@@ -44,48 +53,88 @@ createApp(() => {
   });
 
   const errors = reactive({});
-  const isSubmitting = ref(false);
   const imagePreview = ref('');
-
+  
   const showSuccessToast = ref(false);
   const showErrorToast = ref(false);
   const successMessage = ref('');
   const errorMessage = ref('');
 
   // Computed
+  const totalCategories = computed(() => filteredCategories.length);
   const totalPages = computed(() => Math.ceil(totalCategories.value / perPage.value));
-
-  const getCategorys = async () => {
-    const { data } = await $http.post('', {});
-    console.log(data);
-  }
-
-  getCategorys()
-  /**
-   * Initialize categories list
-   */
-  function initCategoriesList() {
-    // Get categories from page data
-    // const categoriesData = window.categoriesData || [];
-    // categories.splice(0, categories.length, ...categoriesData);
-    // filteredCategories.splice(0, filteredCategories.length, ...categoriesData);
-    // totalCategories.value = categoriesData.length;
-  }
+  
+  const paginatedCategories = computed(() => {
+    const start = (currentPage.value - 1) * perPage.value;
+    const end = start + perPage.value;
+    return filteredCategories.slice(start, end);
+  });
 
   /**
-   * Initialize category form
+   * Get categories from API
    */
-  function initCategoryForm() {
-    // Get form data from page
-    const categoryData = window.categoryData || null;
-    const parentsData = window.parentCategoriesData || [];
-
-    if (categoryData) {
-      Object.assign(formData, categoryData);
+  const getCategories = async () => {
+    try {
+      isLoading.value = true;
+      
+      const response = await $http.post('/admin/categories', {});
+      
+      if (response.data.ok) {
+        categories.splice(0, categories.length, ...response.data.categories);
+        filteredCategories.splice(0, filteredCategories.length, ...response.data.categories);
+        
+        // Update stats
+        Object.assign(stats, response.data.stats);
+      }
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      showToast('error', 'Failed to load categories');
+    } finally {
+      isLoading.value = false;
     }
+  };
 
-    parentCategories.splice(0, parentCategories.length, ...parentsData);
-  }
+  /**
+   * Get parent categories for form
+   */
+  const getParentCategories = async (excludeId = null) => {
+    try {
+      const response = await $http.post('/admin/categories/parents', {
+        exclude_id: excludeId
+      });
+      
+      if (response.data.ok) {
+        parentCategories.splice(0, parentCategories.length, ...response.data.categories);
+      }
+    } catch (error) {
+      console.error('Failed to load parent categories:', error);
+    }
+  };
+
+  /**
+   * Get single category for edit
+   */
+  const getCategory = async (id) => {
+    console.log('getCategory');
+    
+    try {
+      isLoading.value = true;
+      
+      const response = await $http.post(`/admin/categories/${id}`, {});
+      
+      if (response.data.ok) {
+        Object.assign(formData, response.data.category);
+        if (formData.image) {
+          imagePreview.value = formData.image;
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load category:', error);
+      showToast('error', 'Failed to load category');
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
   /**
    * Search categories
@@ -98,12 +147,12 @@ createApp(() => {
    * Filter categories based on search and filters
    */
   function filterCategories() {
-    let filtered = [];
+    let filtered = [...categories];
 
     // Search filter
     if (searchQuery.value) {
       const query = searchQuery.value.toLowerCase();
-      filtered = categories.filter(cat =>
+      filtered = filtered.filter(cat => 
         cat.name.toLowerCase().includes(query) ||
         cat.slug.toLowerCase().includes(query) ||
         (cat.description && cat.description.toLowerCase().includes(query))
@@ -115,8 +164,6 @@ createApp(() => {
       filtered = filtered.filter(cat => cat.status === statusFilter.value);
     }
 
-    console.log(parentFilter.value);
-    
     // Parent filter
     if (parentFilter.value === 'root') {
       filtered = filtered.filter(cat => !cat.parent_id);
@@ -127,15 +174,7 @@ createApp(() => {
     // Sort
     sortCategoriesArray(filtered);
 
-    console.log(filtered,searchQuery.value);
-    
-    filteredCategories.splice(0, filteredCategories.length);
-    filtered.forEach(f=>{
-      console.log(f,filterCategories);
-      
-      filteredCategories.push(f)
-    })
-    totalCategories.value = filtered.length;
+    filteredCategories.splice(0, filteredCategories.length, ...filtered);
     currentPage.value = 1;
   }
 
@@ -179,13 +218,27 @@ createApp(() => {
   }
 
   /**
+   * Toggle single selection
+   */
+  function toggleSelection(id) {
+    const index = selectedIds.indexOf(id);
+    if (index > -1) {
+      selectedIds.splice(index, 1);
+    } else {
+      selectedIds.push(id);
+    }
+  }
+
+  /**
    * Delete category
    */
   function deleteCategory(id, name) {
+    const category = categories.find(c => c.id === id);
+    
     categoryToDelete.id = id;
     categoryToDelete.name = name;
     categoryToDelete.hasChildren = categories.some(c => c.parent_id === id);
-
+    
     document.getElementById('delete_modal').showModal();
   }
 
@@ -201,31 +254,27 @@ createApp(() => {
    */
   async function confirmDelete() {
     try {
-      const response = await fetch(`/admin/categories/${categoryToDelete.id}/delete`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await $http.post(`/admin/categories/${categoryToDelete.id}/delete`, {});
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (response.data.ok) {
         // Remove from list
         const index = categories.findIndex(c => c.id === categoryToDelete.id);
         if (index > -1) {
           categories.splice(index, 1);
         }
-
+        
         filterCategories();
-        showToast('success', data.message);
+        showToast('success', response.data.message);
         closeDeleteModal();
+        
+        // Refresh stats
+        await getCategories();
       } else {
-        showToast('error', data.message);
+        showToast('error', response.data.message);
       }
     } catch (error) {
       console.error('Delete error:', error);
-      showToast('error', 'Failed to delete category');
+      showToast('error', error.response?.data?.message || 'Failed to delete category');
     }
   }
 
@@ -239,25 +288,19 @@ createApp(() => {
     if (!confirmed) return;
 
     try {
-      const response = await fetch('/admin/categories/bulk-action', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: action,
-          ids: selectedIds
-        })
+      const response = await $http.post('/admin/categories/bulk-action', {
+        action: action,
+        ids: selectedIds
       });
 
-      const data = await response.json();
-
-      if (data.success) {
-        showToast('success', data.message);
-        // Reload page to see changes
-        setTimeout(() => window.location.reload(), 1500);
+      if (response.data.ok) {
+        showToast('success', response.data.message);
+        selectedIds.splice(0, selectedIds.length);
+        
+        // Reload categories
+        await getCategories();
       } else {
-        showToast('error', data.message);
+        showToast('error', response.data.message);
       }
     } catch (error) {
       console.error('Bulk action error:', error);
@@ -284,6 +327,7 @@ createApp(() => {
    * Format date
    */
   function formatDate(dateString) {
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -329,7 +373,7 @@ createApp(() => {
     const reader = new FileReader();
     reader.onload = (e) => {
       imagePreview.value = e.target.result;
-      formData.image = e.target.result; // Store base64 or handle upload
+      formData.image = e.target.result;
     };
     reader.readAsDataURL(file);
   }
@@ -343,23 +387,23 @@ createApp(() => {
   }
 
   /**
-   * Submit form
+   * Submit form (create or update)
    */
   async function submitForm(event) {
     event.preventDefault();
-
+    
     if (isSubmitting.value) return;
-
+    
     // Clear previous errors
     Object.keys(errors).forEach(key => delete errors[key]);
-
-    // Validate
-    if (!formData.name) {
+    
+    // Client-side validation
+    if (!formData.name.trim()) {
       errors.name = 'Category name is required';
       return;
     }
-
-    if (!formData.slug) {
+    
+    if (!formData.slug.trim()) {
       errors.slug = 'Slug is required';
       return;
     }
@@ -367,37 +411,33 @@ createApp(() => {
     isSubmitting.value = true;
 
     try {
-      const url = formData.id
+      const endpoint = formData.id 
         ? `/admin/categories/${formData.id}/update`
-        : '/admin/categories';
+        : '/admin/categories/store';
+      
+      const response = await $http.post(endpoint, formData);
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        showToast('success', data.message);
-
-        if (data.redirect) {
-          setTimeout(() => {
-            window.location.href = data.redirect;
-          }, 1500);
-        }
+      if (response.data.ok) {
+        showToast('success', response.data.message);
+        
+        // Redirect to list page
+        setTimeout(() => {
+          window.location.href = '/admin/categories';
+        }, 1500);
       } else {
-        if (data.errors) {
-          Object.assign(errors, data.errors);
+        if (response.data.errors) {
+          Object.assign(errors, response.data.errors);
         }
-        showToast('error', data.message || 'Validation failed');
+        showToast('error', response.data.message || 'Validation failed');
       }
     } catch (error) {
       console.error('Submit error:', error);
-      showToast('error', 'Failed to save category');
+      
+      if (error.response?.data?.errors) {
+        Object.assign(errors, error.response.data.errors);
+      }
+      
+      showToast('error', error.response?.data?.message || 'Failed to save category');
     } finally {
       isSubmitting.value = false;
     }
@@ -408,6 +448,7 @@ createApp(() => {
    */
   function resetForm() {
     Object.assign(formData, {
+      id: null,
       name: '',
       slug: '',
       description: '',
@@ -446,14 +487,28 @@ createApp(() => {
   /**
    * Initialize based on current page
    */
-  function init() {
+  async function init() {
     const path = window.location.pathname;
-
+    
     if (path === '/admin/categories') {
-      initCategoriesList();
-    } else if (path.includes('/admin/categories/create') || path.includes('/admin/categories/edit')) {
-      initCategoryForm();
-
+      // List page
+      await getCategories();
+    } else if (path.includes('/admin/categories/create')) {
+      // Create page
+      await getParentCategories();
+      
+      // Attach form submit handler
+      const form = document.getElementById('category-form');
+      if (form) {
+        form.addEventListener('submit', submitForm);
+      }
+    } else if (path.includes('/admin/categories/edit/')) {
+      // Edit page
+      const id = parseInt(path.split('/').pop());
+      
+      await getParentCategories(id);
+      await getCategory(id);
+      
       // Attach form submit handler
       const form = document.getElementById('category-form');
       if (form) {
@@ -467,8 +522,11 @@ createApp(() => {
 
   return {
     // List state
+    categories,
     filteredCategories,
+    paginatedCategories,
     selectedIds,
+    stats,
     searchQuery,
     statusFilter,
     parentFilter,
@@ -478,6 +536,7 @@ createApp(() => {
     totalCategories,
     totalPages,
     categoryToDelete,
+    isLoading,
 
     // Form state
     formData,
@@ -491,10 +550,12 @@ createApp(() => {
     errorMessage,
 
     // Methods
+    getCategories,
     searchCategories,
     filterCategories,
     sortCategories,
     toggleSelectAll,
+    toggleSelection,
     deleteCategory,
     closeDeleteModal,
     confirmDelete,
@@ -505,6 +566,9 @@ createApp(() => {
     generateSlug,
     handleImageUpload,
     removeImage,
+    submitForm,
     resetForm
   };
-}).use(ZogHttpPlugin).mount('#app');
+})
+.use(ZogHttpPlugin, { baseURL: '' })
+.mount('#app');

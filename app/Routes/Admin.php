@@ -37,29 +37,41 @@ Route::get('/admin', 'AdminController@index');
 
 
 
-// List all categories
-Route::get('/admin/categories', 'CategoriesController@index');
-Route::post('/admin/categories', 'CategoriesController@indexData');
 
-// Show create form
+// ===== VIEW ROUTES (GET) =====
+
+// List categories page
+Route::get('/admin/categories', 'CategoriesController@index');
+
+// Create form page
 Route::get('/admin/categories/create', 'CategoriesController@create');
 
-// Store new category
-Route::post('/admin/categories', 'CategoriesController@store');
-
-// Show edit form
+// Edit form page
 Route::get('/admin/categories/edit/{id}', 'CategoriesController@edit');
 
-// Update category
-Route::put('/admin/categories/{id}', 'CategoriesController@update');
-Route::post('/admin/categories/{id}/update', 'CategoriesController@update'); // Alternative for form submission
 
-// Delete category
-Route::delete('/admin/categories/{id}', 'CategoriesController@delete');
-Route::post('/admin/categories/{id}/delete', 'CategoriesController@delete'); // Alternative for form submission
+// ===== API ROUTES (POST) =====
 
-// Bulk actions
+// Get all categories data (API)
+Route::post('/admin/categories', 'CategoriesController@indexData');
+
+// Get parent categories (API)
+Route::post('/admin/categories/parents', 'CategoriesController@getParents');
+
+// Get single category (API)
+Route::post('/admin/categories/{id}', 'CategoriesController@show');
+
+// Store new category (API)
+Route::post('/admin/categories/store', 'CategoriesController@store');
+
+// Update category (API)
+Route::post('/admin/categories/{id}/update', 'CategoriesController@update');
+
+// Delete category (API)
+Route::post('/admin/categories/{id}/delete', 'CategoriesController@delete');
+
+// Bulk actions (API)
 Route::post('/admin/categories/bulk-action', 'CategoriesController@bulkAction');
 
-// Get category tree (AJAX)
-Route::get('/admin/categories/tree', 'CategoriesController@tree');
+// Get category tree (API)
+Route::post('/admin/categories/tree', 'CategoriesController@tree');
