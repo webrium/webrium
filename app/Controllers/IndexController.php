@@ -6,7 +6,7 @@ class IndexController
 
   public function index()
   {
-    return view('Welcome.php' , [ 'name' => 'Webrium Framework Version 3' ] );
+    return view('page_loaders/welcomeLoader.php');
   }
 
 }
