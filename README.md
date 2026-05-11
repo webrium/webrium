@@ -61,7 +61,6 @@ http://localhost:8000
 ### 🚀 Getting Started
 | Topic | Description |
 |---|---|
-| [Controllers](https://github.com/webrium/webrium/wiki/controllers) | How to create and use controllers in MVC |
 | [Views](https://github.com/webrium/view) | Rendering views and Templating syntax : loops, conditions, layouts |
 
 ### 🌐 Routing & Request
