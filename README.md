@@ -1,55 +1,148 @@
-![](https://repository-images.githubusercontent.com/267562756/f844fe22-c086-4bfd-a20e-ee0e111ceb28)
-
 <div align="center">
+  <img src="https://repository-images.githubusercontent.com/267562756/f844fe22-c086-4bfd-a20e-ee0e111ceb28" alt="Webrium Framework" />
 
-[![Latest Stable Version](https://poser.pugx.org/webrium/webrium/v)](//packagist.org/packages/webrium/webrium) [![Total Downloads](https://poser.pugx.org/webrium/webrium/downloads)](//packagist.org/packages/webrium/webrium)  [![License](https://poser.pugx.org/webrium/webrium/license)](//packagist.org/packages/webrium/webrium)
+  # Webrium
+  ### Fast, Lightweight PHP Framework for Modern Web Applications
 
+  [![Latest Stable Version](https://poser.pugx.org/webrium/webrium/v)](https://packagist.org/packages/webrium/webrium)
+  [![Total Downloads](https://poser.pugx.org/webrium/webrium/downloads)](https://packagist.org/packages/webrium/webrium)
+  [![License](https://poser.pugx.org/webrium/webrium/license)](https://packagist.org/packages/webrium/webrium)
+
+  **Fast · Modular · Elegant**
 </div>
+
+---
 
 ## About Webrium
 
-Webrium is a web application framework that prioritizes quick development, simplicity, and lightness. It offers features like Routes for handling URL mappings,FoxDB for database operations, MVC architecture for organizing the code, and Blade for creating dynamic views
+**Webrium** is a PHP web application framework built for developers who value simplicity, speed, and clean structure. It provides everything you need to build web applications and REST APIs without unnecessary complexity.
 
+✔ Fast and lightweight  
+✔ MVC architecture  
+✔ Powerful routing system  
+✔ Blade-compatible templating  
+✔ Built-in database query builder (FoxDB)  
+✔ Vite + TailwindCSS configured out of the box  
 
-✔ Fast and Lightweight <br>
-✔ MVC structure <br>
-✔ Tailwindcss is configured by default <br>
+---
 
-<br>
+## Installation
 
-## Install
-```
-$ composer create-project webrium/webrium
-```
+Create a new project using Composer:
 
-```
-$ cd webrium & npm install
-```
-
-### Run Server
-```
-$ npm run dev
+```bash
+composer create-project webrium/webrium my-app
 ```
 
-Then run the following address in your browser
+Install frontend dependencies:
 
-`http://localhost:8000`
+```bash
+cd my-app && npm install
+```
 
-<br>
+### Start the Development Server
 
-### Core Documentation
- * [Blade Templates](https://github.com/webrium/webrium/wiki/Blade-Templates)
- * [View](https://github.com/webrium/webrium/wiki/View)
- * [Upload](https://github.com/webrium/webrium/wiki/Upload)
- * [Controllers](https://github.com/webrium/webrium/wiki/controllers)
- * [Route Documentation](https://github.com/webrium/core/wiki/Route-Class-Documentation)
- * [Session Documentation](https://github.com/webrium/core/wiki/Session-Class-Documentation)
- * [JWT (JSON Web Token) Documentation](https://github.com/webrium/core/wiki/JWT-Documentation)
- * [Hash And Password Documentation](https://github.com/webrium/core/wiki/Hash-Class-Documentation)
- * [HTTP Class Documentation](https://github.com/webrium/core/wiki/HTTP-Class-Documentation)
- * [Email Documentation](https://github.com/webrium/core/wiki/Email-Documentation)
- * [Console Documentation](https://github.com/webrium/console)
- * [Form Validation Documentation](https://github.com/webrium/core/wiki/FormValidation-Class-Documentation)
+```bash
+npm run dev
+```
 
-### [💾 Database and Query builder Documentation](https://github.com/webrium/foxdb)  
- <br>
+Then open your browser at:
+
+```
+http://localhost:8000
+```
+
+---
+
+
+
+## Documentation
+
+### 🚀 Getting Started
+| Topic | Description |
+|---|---|
+| [Controllers](https://github.com/webrium/webrium/wiki/controllers) | How to create and use controllers in MVC |
+| [Views](https://github.com/webrium/view) | Rendering views and Templating syntax : loops, conditions, layouts |
+
+### 🌐 Routing & Request
+| Topic | Description |
+|---|---|
+| [Routing](https://github.com/webrium/core/wiki/Route) | Define GET, POST, PUT, DELETE routes, groups, middleware, named routes |
+| [Helper Functions](https://github.com/webrium/core/wiki/Helpers) | Global shortcuts: `url()`, `redirect()`, `input()`, `env()`, and more |
+| [URL Utilities](https://github.com/webrium/core/wiki/Url) | Generate and manipulate URLs |
+| [Header Management](https://github.com/webrium/core/wiki/Header) | Control HTTP response headers |
+| [HTTP Client](https://github.com/webrium/core/wiki/HttpClient) | Make outgoing HTTP requests with a fluent API |
+
+### 🛡️ Security & Validation
+| Topic | Description |
+|---|---|
+| [Form Validation](https://github.com/webrium/core/wiki/From-Validator) | Validate and sanitize user input |
+| [Hash & Password](https://github.com/webrium/core/wiki/Hash) | Secure password hashing, HMAC, tokens, and UUIDs |
+| [JWT](https://github.com/webrium/core/wiki/JWT-Documentation) | Issue and verify JSON Web Tokens for API auth |
+
+### 🗄️ Database
+| Topic | Description |
+|---|---|
+| [FoxDB — Query Builder](https://github.com/webrium/foxdb) | Fluent query builder and ORM for database operations |
+
+### 🛠️ Files & Storage
+| Topic | Description |
+|---|---|
+| [File Manager](https://github.com/webrium/core/wiki/File) | Read, write, stream, download files and manage directories |
+| [File Upload](https://github.com/webrium/core/wiki/Upload) | Handle multipart file uploads safely |
+| [Session Manager](https://github.com/webrium/core/wiki/Session) | Session data, flash messages, and counters |
+
+### ⚙️ Advanced
+| Topic | Description |
+|---|---|
+| [Email](https://github.com/webrium/core/wiki/Email-Documentation) | Send emails from your application |
+| [Console](https://github.com/webrium/console) | CLI commands and task automation |
+
+---
+
+## Quick Example
+
+**routes/web.php**
+```php
+use Webrium\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::group(['prefix' => '/api', 'middleware' => 'AuthMiddleware@handle'], function () {
+    Route::get('/users', 'UserController@index');
+    Route::post('/users', 'UserController@store');
+    Route::get('/users/{id}', 'UserController@show');
+});
+```
+
+**app/Controllers/UserController.php**
+```php
+class UserController
+{
+    public function index()
+    {
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        return view('users.show', compact('user'));
+    }
+}
+```
+
+---
+
+## Core Library
+
+Webrium is powered by **[webrium/core](https://github.com/webrium/core)** — a standalone PHP component library that can also be used independently in any project.
+
+---
+
+## License
+
+Webrium is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
