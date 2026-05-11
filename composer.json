@@ -4,10 +4,10 @@
   "type": "project",
   "require": {
     "php": ">=8.1.0",
-    "webrium/core": "dev-master",
-    "phpmailer/phpmailer": "~6.1",
+    "webrium/core": "^3.0.5",
     "webrium/foxdb": "^3.0.2",
-    "zogjs/zog-php": "dev-main"
+    "webrium/view": "^1.0.2",
+    "phpmailer/phpmailer": "~6.1"
   },
   "license": "MIT",
   "authors": [
