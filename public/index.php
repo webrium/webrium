@@ -7,7 +7,6 @@ use Webrium\Debug;
 use Webrium\File;
 use Webrium\Directory;
 use Webrium\Route;
-use Zog\Zog;
 
 /**
  * -------------------------------------------------------------
@@ -23,11 +22,19 @@ Debug::enableErrorDisplay(true);
 // Disable error logging to file
 Debug::enableErrorLogging(false);
 
+Debug::initialize();
+
+Debug::setErrorRenderer(function(array $data): string {
+    return \Webrium\View\Engine::render('errors/debug', $data);
+});
+
 // Set application root path
 App::initialize(__DIR__.'/..');
 
 // Initialize default directory structure (storage, logs, cache, etc.)
 Directory::initDefaultStructure();
+
+
 
 
 // Load configuration files
