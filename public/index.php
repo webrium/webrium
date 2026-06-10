@@ -4,8 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Webrium\App;
 use Webrium\Debug;
-use Webrium\File;
 use Webrium\Directory;
+use Webrium\Kernel;
 use Webrium\Route;
 
 /**
@@ -38,7 +38,7 @@ Directory::initDefaultStructure();
 
 
 // Load configuration files
-File::source('config', ['DB.php', 'Config.php']);
+Kernel::source('config', ['DB.php', 'Bootstrap.php']);
 
 
 // Load route definitions
