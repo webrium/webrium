@@ -3,3 +3,7 @@
 /storage/App
 /storage/Framework
 /storage/Logs
+webrium
+composer.lock
+package-lock.json
+.env
