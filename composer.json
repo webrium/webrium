@@ -7,8 +7,7 @@
     "webrium/core": "^4.0.0",
     "webrium/foxdb": "^4.0.0",
     "webrium/view": "^2.0.0",
-    "webrium/console": "^2.0.0",
-    "phpmailer/phpmailer": "~6.1"
+    "webrium/console": "^2.0.0"
   },
   "license": "MIT",
   "authors": [
@@ -26,8 +25,12 @@
     "copy-webrium-bin": [
       "php -r \"\\$src = 'vendor/webrium/console/webrium'; \\$dest = 'webrium'; if (file_exists(\\$src)) { copy(\\$src, \\$dest); chmod(\\$dest, 0755); echo 'webrium binary updated.' . PHP_EOL; } else { echo 'webrium binary not found in vendor.' . PHP_EOL; }\""
     ],
+    "post-install-message": [
+      "php -r \"echo PHP_EOL . '🚀 Webrium Framework installed successfully!' . PHP_EOL . '👉 Run \\\"composer serve\\\" to start the development server.' . PHP_EOL . PHP_EOL;\""
+    ],
     "post-install-cmd": [
-      "@copy-webrium-bin"
+      "@copy-webrium-bin",
+      "@post-install-message"
     ],
     "post-update-cmd": [
       "@copy-webrium-bin"
