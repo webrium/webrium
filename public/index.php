@@ -3,47 +3,32 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Webrium\App;
-use Webrium\Debug;
-use Webrium\File;
-use Webrium\Directory;
 use Webrium\Route;
+use Webrium\Directory;
+use Webrium\Session;
+use Webrium\Debug;
+use Webrium\Kernel;
+use Webrium\View\Engine;
 
-/**
- * -------------------------------------------------------------
- *  Application Bootstrap
- * -------------------------------------------------------------
- *  Sets application paths, loads configuration files,
- *  initializes directory structure, and registers routes.
- */
+App::initialize(__DIR__ . '/..');
 
-// Enable error display for debugging
-Debug::enableErrorDisplay(true);
-
-// Disable error logging to file
-Debug::enableErrorLogging(false);
-
-Debug::initialize();
-
-Debug::setErrorRenderer(function(array $data): string {
-    return \Webrium\View\Engine::render('errors/debug', $data);
-});
-
-// Set application root path
-App::initialize(__DIR__.'/..');
-
-// Initialize default directory structure (storage, logs, cache, etc.)
 Directory::initDefaultStructure();
 
+Debug::enableErrorDisplay(env('APP_DEBUG', false));
+Debug::enableErrorLogging(env('APP_LOG_ERRORS', true));
 
+Engine::setViewDir(Directory::path('views'));
+Engine::setCompiledDir(Directory::path('render_views'));
+Engine::setStaticDir(Directory::path('static_views'));
 
+Session::setSavePath(Directory::path('sessions'));
 
-// Load configuration files
-File::source('config', ['DB.php', 'Config.php']);
+Debug::setErrorRenderer(function (array $data): string {
+    return Engine::render('errors/debug', $data);
+});
 
+Kernel::source('config', ['DB.php']);
 
-// Load route definitions
 Route::source(['Web.php']);
 
-
-// Run the routing engine
 App::run();
