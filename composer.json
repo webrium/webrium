@@ -4,8 +4,8 @@
   "type": "project",
   "require": {
     "php": ">=8.1.0",
-    "webrium/core": "^3.0.5",
-    "webrium/foxdb": "^3.0.2",
+    "webrium/core": "dev-refactor/core-v4-architecture",
+    "webrium/foxdb": "^4.0.0",
     "webrium/view": "^2.0.0",
     "webrium/console": "^2.0.0",
     "phpmailer/phpmailer": "~6.1"
