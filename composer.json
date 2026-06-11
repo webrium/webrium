@@ -26,7 +26,16 @@
     "copy-webrium-bin": [
       "php -r \"\\$src = 'vendor/webrium/console/webrium'; \\$dest = 'webrium'; if (file_exists(\\$src)) { copy(\\$src, \\$dest); chmod(\\$dest, 0755); echo 'webrium binary updated.' . PHP_EOL; } else { echo 'webrium binary not found in vendor.' . PHP_EOL; }\""
     ],
-    "post-install-cmd": ["@copy-webrium-bin"],
-    "post-update-cmd":  ["@copy-webrium-bin"]
+    "post-install-cmd": [
+      "@copy-webrium-bin"
+    ],
+    "post-update-cmd": [
+      "@copy-webrium-bin"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
   }
 }
