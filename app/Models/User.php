@@ -1,7 +1,8 @@
 <?php
 namespace App\Models;
 
-use Foxdb\Model;
+use Foxdb\Eloquent\Model;
+
 
 class User extends Model{
 
@@ -10,7 +11,7 @@ class User extends Model{
   *
   * @var string
   */
-  protected $table = 'users';
+  protected string $table = 'users';
 
 
 }
