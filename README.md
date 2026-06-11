@@ -72,12 +72,12 @@ class UserController
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        return view('users/index.php', compact('users'));
     }
 
     public function show($id)
     {
-        return view('users.show', ['user' => User::find($id)]);
+        return view('users/show.php', ['user' => User::find($id)]);
     }
 
     public function store()
