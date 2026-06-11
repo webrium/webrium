@@ -34,7 +34,7 @@
     "post-create-project-cmd": [
         "php -r \"echo PHP_EOL . '✅ Webrium installed successfully!' . PHP_EOL . '👉 Run: npm install && npm run dev' . PHP_EOL . PHP_EOL;\""
     ]
-}
+},
   "autoload": {
     "psr-4": {
       "App\\": "app/"
