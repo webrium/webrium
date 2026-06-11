@@ -20,22 +20,21 @@
   "scripts": {
     "serve": "php -S 127.0.0.1:8000 -t public",
     "post-root-package-install": [
-      "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
     "copy-webrium-bin": [
-      "php -r \"\\$src = 'vendor/webrium/console/webrium'; \\$dest = 'webrium'; if (file_exists(\\$src)) { copy(\\$src, \\$dest); chmod(\\$dest, 0755); echo 'webrium binary updated.' . PHP_EOL; } else { echo 'webrium binary not found in vendor.' . PHP_EOL; }\""
-    ],
-    "post-install-message": [
-      "php -r \"echo PHP_EOL . '🚀 Webrium Framework installed successfully!' . PHP_EOL . '👉 Run \\\"composer serve\\\" to start the development server.' . PHP_EOL . PHP_EOL;\""
+        "php -r \"\\$src = 'vendor/webrium/console/webrium'; \\$dest = 'webrium'; if (file_exists(\\$src)) { copy(\\$src, \\$dest); chmod(\\$dest, 0755); echo 'webrium binary updated.' . PHP_EOL; } else { echo 'webrium binary not found in vendor.' . PHP_EOL; }\""
     ],
     "post-install-cmd": [
-      "@copy-webrium-bin",
-      "@post-install-message"
+        "@copy-webrium-bin"
     ],
     "post-update-cmd": [
-      "@copy-webrium-bin"
+        "@copy-webrium-bin"
+    ],
+    "post-create-project-cmd": [
+        "php -r \"echo PHP_EOL . '✅ Webrium installed successfully!' . PHP_EOL . '👉 Run: npm install && npm run dev' . PHP_EOL . PHP_EOL;\""
     ]
-  },
+}
   "autoload": {
     "psr-4": {
       "App\\": "app/"
