@@ -5,6 +5,8 @@ export default defineConfig(({ command }) => ({
   plugins: [
     webrium(),
   ],
+  root: '.',
+  publicDir: false,
   base: command === 'build' ? '/build/' : '/',
   build: {
     outDir: 'public/build',
