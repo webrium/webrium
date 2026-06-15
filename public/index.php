@@ -8,6 +8,7 @@ use Webrium\Directory;
 use Webrium\Session;
 use Webrium\Debug;
 use Webrium\Kernel;
+use Webrium\Vite;
 use Webrium\View\Engine;
 
 
@@ -111,6 +112,21 @@ Kernel::source('config', ['DB.php']);
 */
 
 Route::source(['Web.php']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Configure Vite Asset Bundler
+|--------------------------------------------------------------------------
+|
+| Register the application root path with the Vite integration so that
+| asset manifests and compiled bundles are resolved from the correct
+| location during both development and production builds.
+|
+*/
+
+Vite::getInstance()->setBasePath(App::getRootPath());
+
 
 /*
 |--------------------------------------------------------------------------
