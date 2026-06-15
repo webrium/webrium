@@ -112,7 +112,7 @@ class UserController
 ### Security & Validation
 | Topic | Description |
 |---|---|
-| [Form Validation](https://github.com/webrium/core/wiki/From-Validator) | Validate and sanitize user input |
+| [Form Validation](https://github.com/webrium/core/wiki/validator) | Validate and sanitize user input |
 | [Hash & Password](https://github.com/webrium/core/wiki/Hash) | Secure password hashing, HMAC, tokens, and UUIDs |
 | [JWT](https://github.com/webrium/core/wiki/JWT-Documentation) | Issue and verify JSON Web Tokens for API authentication |
 
