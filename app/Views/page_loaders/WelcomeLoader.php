@@ -1,1 +1,0 @@
-@raw(layout('layouts/site.php', 'pages/Welcome.php'))

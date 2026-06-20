@@ -1,8 +1,8 @@
 /node_modules
 /vendor
-/storage/App
-/storage/Framework
-/storage/Logs
+/storage/app
+/storage/framework
+/storage/logs
 webrium
 composer.lock
 package-lock.json

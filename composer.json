@@ -1,12 +1,12 @@
 {
   "name": "webrium/webrium",
-  "description": "PHP Framework",
+  "description": "Webrium is a lightweight PHP framework for web development",
   "type": "project",
   "require": {
     "php": ">=8.1.0",
-    "webrium/core": "^4.0.0",
-    "webrium/foxdb": "^4.0.0",
-    "webrium/view": "^2.0.0",
+    "webrium/core": "^5.0.0",
+    "webrium/foxdb": "^4.0.3",
+    "webrium/view": "^2.0.1",
     "webrium/console": "^2.0.0"
   },
   "license": "MIT",
