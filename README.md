@@ -9,6 +9,8 @@
   [![License](https://poser.pugx.org/webrium/webrium/license)](https://packagist.org/packages/webrium/webrium)
 
   **Fast · Modular · Elegant**
+
+  [**webrium.dev**](https://webrium.dev) · [Documentation](https://webrium.dev/docs/v5/getting-started/introduction) · [GitHub](https://github.com/webrium)
 </div>
 
 ---
@@ -72,12 +74,12 @@ class UserController
     public function index()
     {
         $users = User::all();
-        return view('users/index.php', compact('users'));
+        return view('users.index', compact('users'));
     }
 
     public function show($id)
     {
-        return view('users/show.php', ['user' => User::find($id)]);
+        return view('users.show', ['user' => User::find($id)]);
     }
 
     public function store()
@@ -92,69 +94,21 @@ class UserController
 
 ## Documentation
 
-> **Documentation is currently being written.**  
-> The full docs site is under construction. In the meantime, you can find the available references below.
+The full documentation lives at **[webrium.dev/docs](https://webrium.dev/docs/v5/getting-started/introduction)**, organized into five sections:
 
-### Getting Started
-| Topic | Description |
-|---|---|
-| [Views](https://github.com/webrium/view) | Rendering views and templating syntax: loops, conditions, layouts |
+- **[Getting Started](https://webrium.dev/docs/v5/getting-started/introduction)** — installation, configuration, request lifecycle
+- **[Core](https://webrium.dev/docs/v5/core/introduction)** — routing, controllers, requests/responses, sessions, validation, uploads, HTTP client, JWT, hashing, events, filesystem, localization, error handling
+- **[Database](https://webrium.dev/docs/v5/database/introduction)** — query builder, ORM, relationships, migrations, seeders
+- **[Template Engine](https://webrium.dev/docs/v5/template-engine/introduction)** — syntax, layouts, components, hybrid caching
+- **[Console](https://webrium.dev/docs/v5/console/introduction)** — the `webrium` CLI: scaffolding, migrations, plugins
 
-### Routing & Request
-| Topic | Description |
-|---|---|
-| [Routing](https://github.com/webrium/core/wiki/Route) | Define routes, groups, middleware, named routes |
-| [Helper Functions](https://github.com/webrium/core/wiki/Helpers) | Global shortcuts: `url()`, `redirect()`, `input()`, `respond()`, `env()` and more |
-| [URL Utilities](https://github.com/webrium/core/wiki/Url) | Generate and manipulate URLs |
-| [Header Management](https://github.com/webrium/core/wiki/Header) | Control HTTP response headers |
-| [HTTP Client](https://github.com/webrium/core/wiki/HttpClient) | Make outgoing HTTP requests with a fluent API |
-
-### Security & Validation
-| Topic | Description |
-|---|---|
-| [Form Validation](https://github.com/webrium/core/wiki/validator) | Validate and sanitize user input |
-| [Hash & Password](https://github.com/webrium/core/wiki/Hash) | Secure password hashing, HMAC, tokens, and UUIDs |
-| [JWT](https://github.com/webrium/core/wiki/JWT-Documentation) | Issue and verify JSON Web Tokens for API authentication |
-
-### Database
-| Topic | Description |
-|---|---|
-| [FoxDB — Query Builder](https://github.com/webrium/foxdb) | Fluent query builder and ORM for database operations |
-
-### Files & Storage
-| Topic | Description |
-|---|---|
-| [File Manager](https://github.com/webrium/core/wiki/File) | Read, write, stream, and download files |
-| [File Upload](https://github.com/webrium/core/wiki/Upload) | Handle multipart file uploads safely |
-| [Session Manager](https://github.com/webrium/core/wiki/Session) | Session data, flash messages, and counters |
-
-### Advanced
-| Topic | Description |
-|---|---|
-| [Console](https://github.com/webrium/console) | CLI commands and task automation |
+The same documentation is also maintained as plain Markdown in the **[webrium/docs](https://github.com/webrium/docs)** repository — useful for offline reading, contributing fixes, or integrating with AI assistants (an `llms.txt` and a Claude `.skill` package are bundled there).
 
 ---
 
 ## Core Library
 
 Webrium is powered by **[webrium/core](https://github.com/webrium/core)** — a standalone PHP component library that can be used independently in any project.
-
----
-
-## What's new in v4.0.0
-
-- `Kernel` class introduced as the application execution core
-- Controller dispatch decoupled from `File` and `Directory`
-- `Header::respond()` as the canonical HTTP response method
-- `Url::input()` handles all request body parsing
-- `Route::source()` supports custom directory paths
-- Class-based middleware support (`Middleware@handle` or `Middleware::class`)
-- Middleware failure returns `403` instead of falling through to the next route
-- Both string (`'Controller@method'`) and array (`[Controller::class, 'method']`) route syntax supported
-- `boot()` and `teardown()` controller lifecycle hooks
-- `Event::once()` fixed
-- `declare(strict_types=1)` across all source files
-- `Mail` stub removed
 
 ---
 
