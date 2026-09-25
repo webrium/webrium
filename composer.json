@@ -32,7 +32,7 @@
         "@copy-webrium-bin"
     ],
     "post-create-project-cmd": [
-        "php -r \"echo PHP_EOL . '✅ Webrium installed successfully!' . PHP_EOL . '👉 Run: npm install && npm run dev' . PHP_EOL . PHP_EOL;\""
+        "php -r \"\\$dir = basename(getcwd()); echo PHP_EOL . '✅ Webrium installed successfully!' . PHP_EOL . PHP_EOL . 'Next steps:' . PHP_EOL . '  cd ' . \\$dir . PHP_EOL . '  npm install' . PHP_EOL . '  npm run dev' . PHP_EOL . PHP_EOL . '📚 Docs:   https://webrium.dev/docs' . PHP_EOL . '🐙 Source: https://github.com/webrium/webrium' . PHP_EOL . PHP_EOL;\""
     ]
 },
   "autoload": {
